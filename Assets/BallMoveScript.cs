@@ -15,24 +15,22 @@ public class BallMoveScript : MonoBehaviour
     void Start()
     {
         gameUI = GameObject.FindGameObjectWithTag("Screen").GetComponent<GameUI>();
+        //Append method randomDirection to listeners of onStartGame Action
         gameUI.onStartGame += randomDirection;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void FixedUpdate()
     {
+        //consistently updates lastVelocity to be used in OnCollisionEnter2D
         lastVelocity = myRigidbody.velocity;
+        //Handles edge case where ball gets stuck not moving in x-direction
         if (lastVelocity.x == 0)
         {
-            lastVelocity.y = 1;
+            lastVelocity.x = 1;
         }
     }
 
+    //used to maintain same speed reflecting off surfaces
     private void OnCollisionEnter2D(Collision2D collision)
     {
         var speed = lastVelocity.magnitude * 1.1f;
@@ -41,6 +39,8 @@ public class BallMoveScript : MonoBehaviour
 
         myRigidbody.velocity = direction * Mathf.Max(speed, 2f);
     }
+
+    //used to initialize ball at start of the game and each time player or opponent scores point
     public void randomDirection()
     {
         randomStartDirection = Random.insideUnitCircle;
@@ -48,6 +48,7 @@ public class BallMoveScript : MonoBehaviour
         float getRad = Mathf.Atan(randomStartDirection.y / randomStartDirection.x);
         
         
+        //handles case where ball is shot in upwards direction rather than towards player
         if (randomStartDirection.x >= 0 && randomStartDirection.y >= 0)
         {
             //1st quadrant
@@ -82,6 +83,7 @@ public class BallMoveScript : MonoBehaviour
         }
 
         randomStartDirection.z = 0;
+        //needed to normalized randomStartDirection to ensure same speed is given to ball at the start of game and everytime character scores
         myRigidbody.velocity = randomStartDirection.normalized * moveSpeed;
         Debug.Log(myRigidbody.velocity);
     }

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//Class used to detect whether Opponent has been scored on and increase score to player by 1, and restart the game
 public class RightWallScript : MonoBehaviour
 {
     private LogicManagerScript logic;

@@ -24,6 +24,8 @@ public class GameUI : MonoBehaviour
         logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicManagerScript>();
 
     }
+
+    //Adding score to text field on Game UI
     public void addScorePlayer(int scoreToAdd = 1)
     {
         playerScore += scoreToAdd;
@@ -38,11 +40,14 @@ public class GameUI : MonoBehaviour
 
     }
 
+    //Removes menu screen and moves onto next screen, which is difficulty screen, could potentially implement state machine instead
     public void OnStartButtonClicked()
     {
         menu.SetActive(false);
         difficulty.SetActive(true);
     }
+
+    //easy difficulty desicion, resumes game and lowers opponent movement speed
     public void OnEasyButtonClicked()
     {
         difficulty.SetActive(false);
@@ -52,6 +57,7 @@ public class GameUI : MonoBehaviour
         logic.moveSpeed = 5f;
     }
 
+    //Medium difficulty desicion, resumes game and increases opponent movement speed and increasing paddle height
     public void OnMediumButtonClicked()
     {
         difficulty.SetActive(false);
@@ -62,6 +68,7 @@ public class GameUI : MonoBehaviour
         opponent.transform.localScale = new Vector3(1, 2, 1);
     }
 
+    //Hard difficulty desicion, resumes game and increases opponent movement speed, increasing paddle height & decreases deadzone
     public void OnHardButtonClicked()
     {
         difficulty.SetActive(false);
@@ -73,6 +80,8 @@ public class GameUI : MonoBehaviour
         opponent.transform.localScale = new Vector3(1, 2, 1);
     }
 
+
+    //reloads game to initial state
     public void OnRestartButtonClicked()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
